@@ -11,7 +11,7 @@ export class CoinService {
 
   ){}
 
-  async createCoin(name: string,description: string, value:string, quantity:string, nationality: Nationality, release: Date): Promise<Coin> {
+  async createCoin(name: string,description: string, value:string, quantity:string, nationality:string ,release: Date): Promise<Coin> {
     return await this.CoinRepo.addCoin(name, description, value, quantity, nationality, release);
   }
   

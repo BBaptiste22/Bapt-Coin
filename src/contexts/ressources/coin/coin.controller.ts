@@ -14,7 +14,7 @@ export class CoinController {
   @HttpCode(HttpStatus.CREATED)
 
   async creation(@Body() body: RscCoin) {
-    return await this.CoinService.createCoin(body.name,body.description,body.value,body.quantity,body.nationality, body.release);
+    return await this.CoinService.createCoin(body.name,body.description,body.value,body.quantity,  body.nationality,body.release);
   }
 
 

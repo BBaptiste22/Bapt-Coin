@@ -1,4 +1,4 @@
-import { IsDate, IsNumber, IsString } from "class-validator";
+import { IsDate, IsDateString, IsNumber, IsString } from "class-validator";
 import { RscNationality } from "../../nationality/types/nationality.dto";
 
 export class RscCoin {
@@ -17,10 +17,10 @@ export class RscCoin {
     @IsString()
     value : string 
 
-    @IsDate()
+    @IsDateString()
     release : Date
 
 
-    @IsNumber()
-    nationality : number
+    @IsString()
+    nationality : string
 }

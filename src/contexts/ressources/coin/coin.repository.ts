@@ -18,10 +18,19 @@ export class CoinRepository implements ICoinRepository{
         return entity
     }
 
-    async addCoin(name: string, description: string, value: string, quantity: string, nationality:Nationality, release:Date): Promise<Coin> {
-        const coin = this.CoinRepository.create({name, value, quantity, nationality, release});
-        return await this.CoinRepository.save(coin);
-    }
+    async addCoin(name: string, description: string, value: string, quantity: string, nationality: string, release: Date): Promise<Coin> {
+    
+    const coin = this.CoinRepository.create({
+        name, 
+        description, 
+        value, 
+        quantity,
+        nationality: { id: nationality }, 
+        release
+    });
+
+    return await this.CoinRepository.save(coin);
+}
 
 
 }

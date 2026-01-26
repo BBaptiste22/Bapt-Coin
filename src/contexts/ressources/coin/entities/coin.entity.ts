@@ -1,5 +1,5 @@
 
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Nationality } from "../../nationality/entities/nationality.entity";
 
 @Entity('coin')
@@ -19,8 +19,9 @@ export class Coin{
     @Column({name: 'quantity'})
     quantity : string 
 
-    @ManyToOne(type => Nationality, nationality  => nationality.name)
-    nationality: Nationality[];
+    @ManyToOne(() => Nationality, { nullable: false })
+    @JoinColumn({ name: 'nationality' })
+    nationality: Nationality;
 
     @CreateDateColumn({name :'release'})
     release : Date 
