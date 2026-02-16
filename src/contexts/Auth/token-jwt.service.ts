@@ -1,19 +1,26 @@
 import { Injectable } from "@nestjs/common";
-import { PasswordHashPort } from "./ports/password-hasher";
-import * as jwt from 'jsonwebtoken'
+import * as jwt from 'jsonwebtoken';
 import { JWTTokenPort } from "./ports/jwt";
 
-//const jwt = require('jsonwebtoken');
 @Injectable()
-
 export class TokenJwtService implements JWTTokenPort {
-    generateToken(payload: object): Promise<string> {
-        return jwt.sign({ payload} )
+    private readonly secret = '512821781512217718178122177182'; // À mettre dans les variables d'environnement
+
+    async generateToken(payload: object, expiresIn?: string | number): Promise<string> {
+        return new Promise((resolve, reject) => {
+            jwt.sign(payload, this.secret, { expiresIn: expiresIn || '12000s' }, (err, token) => {
+                if (err) reject(err);
+                else resolve(token as string);
+            });
+        });
     }
-    verifyToken(token: string): Promise<object | null> {
-        return jwt.verify({ token } )
+
+    async verifyToken(token: string): Promise<object | null> {
+        return new Promise((resolve, reject) => {
+            jwt.verify(token, this.secret, (err, decoded) => {
+                if (err) reject(err);
+                else resolve((decoded as object) || null);
+            });
+        });
     }
-    verifyAccessToken(token: string): Promise<object | null> {
-        return jwt.verify({ token} ) 
-    }   
 }

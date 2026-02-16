@@ -4,5 +4,5 @@ import { IsString } from "class-validator";
 export class UserLoggedPresenter{
     @Expose()
     @IsString()
-    username : String 
+    email : String 
 }

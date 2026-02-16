@@ -1,12 +1,16 @@
-import { Expose } from "class-transformer"
-import { IsEmail, isNumber, IsString, IsStrongPassword } from "class-validator"
+import { IsEmail, IsString, IsStrongPassword } from "class-validator"
 
-export class LoginDTO  {
-    @IsString()
-    username !: string 
-
+export class LoginDTO {
+    @IsEmail()
+    email: string
     @IsStrongPassword()
-    password !: string
+    password: string
+}
 
-
+export class RegisterDTO {
+    @IsEmail()
+    email: string
+    @IsStrongPassword()
+    password: string
+    
 }

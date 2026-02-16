@@ -1,25 +1,27 @@
-import { Injectable } from "@nestjs/common";
-import { Repository } from "typeorm";
-import { UserCredentialsEntity } from "./entities/user-credentials.entity";
-import { InjectRepository } from "@nestjs/typeorm";
-import { IAuthRepository } from "./auth.repository.interface";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { UserCredentialsEntity } from './entities/user-credentials.entity';
+import { IAuthRepository } from './auth.repository.interface';
 
 @Injectable()
-export class AuthRepository implements IAuthRepository{
+export class AuthRepository implements IAuthRepository {
     constructor(
-        @InjectRepository(UserCredentialsEntity) private readonly credentialRepository: Repository<UserCredentialsEntity>
-    ){}
-    async findCredentialByEmail(email: string) : Promise <UserCredentialsEntity | null>{
-        const entity = await this.credentialRepository.findOne({
-            where: { email }
-        })
+        @InjectRepository(UserCredentialsEntity)
+        private readonly userCredentialsRepo: Repository<UserCredentialsEntity>,
+    ) {}
 
+    async findCredentialByEmail(email: string): Promise<UserCredentialsEntity | null> {
+        return this.userCredentialsRepo.findOne({ where: { email } });
+    }
 
-        const test = this.credentialRepository.create({
-            email: 'eeeeee'
-        })
-        
-        await this.credentialRepository.save(test)
-        return entity
+    async createCredential(data: Partial<UserCredentialsEntity>): Promise<UserCredentialsEntity> {
+        const credential = this.userCredentialsRepo.create(data);
+        return this.userCredentialsRepo.save(credential);
+    }
+
+    async checkEmailExists(email: string): Promise<boolean> {
+        const count = await this.userCredentialsRepo.count({ where: { email } });
+        return count > 0;
     }
 }

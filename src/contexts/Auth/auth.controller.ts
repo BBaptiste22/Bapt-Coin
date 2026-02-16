@@ -1,21 +1,24 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, HttpStatus, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { plainToInstance } from 'class-transformer';
-import { UserLoggedPresenter } from './types/auth.presenter';
-import { LoginDTO } from './types/auth.dto';
+import { LoginDTO, RegisterDTO } from './types/auth.dto';
 
 @Controller('auth')
+@UseInterceptors(ClassSerializerInterceptor) 
 export class authController {
-  constructor(
-  ) {}
+  constructor(private readonly authService: AuthService) {}
+
+  @Post('register')
+  @HttpCode(HttpStatus.CREATED)
+  async register(@Body() registerDto: RegisterDTO) {
+    await this.authService.register(registerDto);
+    return { message: 'Utilisateur créé avec succès' };
+  }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  login(@Body() body: LoginDTO): UserLoggedPresenter{
+  async login(@Body() loginDto: LoginDTO) {
+    const tokens = await this.authService.login(loginDto);
 
-    const infoAuth = {username : 'Batzoum', password : 'Passwordff122-'}
-
-    return plainToInstance(UserLoggedPresenter, infoAuth, {excludeExtraneousValues: true})
+    return tokens;
   }
-
 }
