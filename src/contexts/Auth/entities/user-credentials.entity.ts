@@ -1,19 +1,32 @@
 import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { DEFAULT_PERMISSIONS } from "src/core/permissions/permissions";
+import { HttpStatus } from "@nestjs/common";
 
 @Entity('user-credentials')
-export class UserCredentialsEntity{
+export class UserCredentialsEntity {
     @PrimaryGeneratedColumn('uuid')
+    id: string;
 
-    id : string;
+    @Column({ name: 'password_hash', type: 'varchar', length: 255 })
+    password: string;
 
-    @Column({name: 'password_hash', type : 'varchar', length: 255})
-    password : String;
-
-    @Index({unique : true})
-    @Column({name: 'email', type : 'varchar', length: 255})
+    @Index({ unique: true })
+    @Column({ name: 'email', type: 'varchar', length: 255 })
     email: string;
 
-    @CreateDateColumn({name : 'created_at'})
-    createdAt : Date
-    
+    @Column({
+        name: 'permissions',
+        type: 'bigint',
+        unsigned: true,
+        default: DEFAULT_PERMISSIONS.toString(),
+        transformer: {
+            to: (value: bigint | undefined) => (value ?? DEFAULT_PERMISSIONS).toString(),
+            from: (value: string) => BigInt(value ?? DEFAULT_PERMISSIONS),
+        },
+    })
+    permissions: bigint;
+
+    @CreateDateColumn({ name: 'created_at' })
+    createdAt: Date;
 }
+

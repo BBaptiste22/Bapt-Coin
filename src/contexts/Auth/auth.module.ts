@@ -9,17 +9,23 @@ import { PASSWORD_HASHER } from './ports/password-hasher';
 import { PasswordHasherService } from './password-hasher.service';
 import { JWT_TOKEN_SERVICE } from './ports/jwt';
 import { TokenJwtService } from './token-jwt.service';
-import { SendUserRegisteredEventHandler } from './handlers/send-user-registered.handler';
+import { UserRegisteredHandler } from './handlers/send-user-registered.handler';
+import { NotificationsModule } from 'src/core/mailer/MailerModule';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UserCredentialsEntity])],
+    imports: [
+        TypeOrmModule.forFeature([UserCredentialsEntity]),
+        NotificationsModule,
+    ],
     controllers: [authController],
     providers: [
-        AuthService,SendUserRegisteredEventHandler,
+        AuthService,
+        UserRegisteredHandler,
         { provide: AUTH_REPOSITORY, useClass: AuthRepository },
         { provide: PASSWORD_HASHER, useClass: PasswordHasherService },
         { provide: JWT_TOKEN_SERVICE, useClass: TokenJwtService },
+        TokenJwtService,
     ],
-    exports: [JWT_TOKEN_SERVICE],
+    exports: [JWT_TOKEN_SERVICE, TokenJwtService],
 })
 export class authModule {}

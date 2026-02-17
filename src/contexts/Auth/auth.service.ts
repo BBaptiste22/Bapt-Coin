@@ -60,6 +60,7 @@ export class AuthService {
         const payload = {
             sub: credential.id,
             email: credential.email,
+            permissions: credential.permissions.toString(), // bigint → string pour le JWT
         };
 
         const accessToken = await this.tokenService.generateToken(payload, '1h');
@@ -69,6 +70,7 @@ export class AuthService {
             user: {
                 id: credential.id,
                 email: credential.email,
+                permissions: credential.permissions.toString(),
             },
         };
     }
