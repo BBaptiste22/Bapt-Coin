@@ -11,13 +11,14 @@ import { JWT_TOKEN_SERVICE } from './ports/jwt';
 import { TokenJwtService } from './token-jwt.service';
 import { UserRegisteredHandler } from './handlers/send-user-registered.handler';
 import { NotificationsModule } from 'src/core/mailer/MailerModule';
+import { UserController } from './permissions/user-permission.controller';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([UserCredentialsEntity]),
         NotificationsModule,
     ],
-    controllers: [authController],
+    controllers: [authController, UserController],
     providers: [
         AuthService,
         UserRegisteredHandler,
@@ -26,6 +27,6 @@ import { NotificationsModule } from 'src/core/mailer/MailerModule';
         { provide: JWT_TOKEN_SERVICE, useClass: TokenJwtService },
         TokenJwtService,
     ],
-    exports: [JWT_TOKEN_SERVICE, TokenJwtService],
+    exports: [JWT_TOKEN_SERVICE, TokenJwtService, AuthService],
 })
 export class authModule {}

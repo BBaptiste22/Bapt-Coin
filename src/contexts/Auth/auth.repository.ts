@@ -15,6 +15,10 @@ export class AuthRepository implements IAuthRepository {
         return this.userCredentialsRepo.findOne({ where: { email } });
     }
 
+    async findById(id: string): Promise<UserCredentialsEntity | null> {
+        return this.userCredentialsRepo.findOne({ where: { id } });
+    }
+
     async createCredential(data: Partial<UserCredentialsEntity>): Promise<UserCredentialsEntity> {
         const credential = this.userCredentialsRepo.create(data);
         return this.userCredentialsRepo.save(credential);
@@ -23,5 +27,10 @@ export class AuthRepository implements IAuthRepository {
     async checkEmailExists(email: string): Promise<boolean> {
         const count = await this.userCredentialsRepo.count({ where: { email } });
         return count > 0;
+    }
+
+    async updatePermissions(id: string, permissions: bigint): Promise<UserCredentialsEntity> {
+        await this.userCredentialsRepo.update(id, { permissions });
+        return this.userCredentialsRepo.findOneOrFail({ where: { id } });
     }
 }

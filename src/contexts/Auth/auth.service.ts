@@ -1,10 +1,12 @@
-import { Inject, Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, ConflictException, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { LoginDTO, RegisterDTO } from './types/auth.dto';
 import { AUTH_REPOSITORY, type IAuthRepository } from './auth.repository.interface';
 import { PASSWORD_HASHER, type IPasswordHasherPort } from './ports/password-hasher';
 import { JWT_TOKEN_SERVICE, type JWTTokenPort } from './ports/jwt';
 import { EVENT_BUS, type EventBusPort } from 'src/core/events/event.bus';
 import { userRegisteredEvent } from './events/user-registrered.event';
+import { Permissions } from 'src/core/permissions/permissions';
+import { UserCredentialsEntity } from './entities/user-credentials.entity';
 
 @Injectable()
 export class AuthService {
@@ -60,7 +62,7 @@ export class AuthService {
         const payload = {
             sub: credential.id,
             email: credential.email,
-            permissions: credential.permissions.toString(), // bigint → string pour le JWT
+            permissions: credential.permissions.toString(),
         };
 
         const accessToken = await this.tokenService.generateToken(payload, '1h');
@@ -72,6 +74,19 @@ export class AuthService {
                 email: credential.email,
                 permissions: credential.permissions.toString(),
             },
+        };
+    }
+
+    async updatePermissions(id: string, permissions: bigint): Promise<{ id: string; email: string; permissions: string }> {
+        const user = await this.authRepo.findById(id);
+        if (!user) throw new NotFoundException(`User ${id} introuvable`);
+
+        const updated = await this.authRepo.updatePermissions(id, permissions);
+
+        return {
+            id: updated.id,
+            email: updated.email,
+            permissions: updated.permissions.toString(),
         };
     }
 }
