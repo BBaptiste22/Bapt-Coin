@@ -1,16 +1,36 @@
-import { IsDate, IsNumber, IsString } from "class-validator";
+import { IsOptional, IsString } from "class-validator";
 
 export class RscNationality {
-
-   
-    
     @IsString()
-    name : string
+    name: string;
 
     @IsString()
-    country_code : string
+    country_code: string;
 
     @IsString()
-    flag : string
+    flag: string;
+}
 
+export class UpdateNationalityDto {
+    @IsOptional()
+    @IsString()
+    name?: string;
+
+    @IsOptional()
+    @IsString()
+    country_code?: string;
+
+    @IsOptional()
+    @IsString()
+    flag?: string;
+}
+
+export class NationalityFilterDto {
+    @IsOptional()
+    @IsString()
+    name?: string;
+
+    @IsOptional()
+    @IsString()
+    country_code?: string;
 }

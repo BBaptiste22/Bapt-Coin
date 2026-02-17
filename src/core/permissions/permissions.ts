@@ -8,9 +8,10 @@ export const Permissions = {
     COIN_READ:     1n << 6n,   // 64
     COIN_WRITE:    1n << 7n,   // 128
 
+    ADMIN_ALL:     1n << 63n,   // 256
 
 } as const;
 
 export const DEFAULT_PERMISSIONS = Permissions.USER_READ | Permissions.COIN_READ;
-export const DEFAULT_ADMIN_PERMISSIONS = Permissions.USER_READ | Permissions.USER_WRITE | Permissions.USER_DELETE | Permissions.COIN_READ | Permissions.COIN_WRITE;
+export const DEFAULT_ADMIN_PERMISSIONS = Permissions.USER_READ | Permissions.USER_WRITE | Permissions.USER_DELETE | Permissions.COIN_READ | Permissions.COIN_WRITE | Permissions.ADMIN_ALL;
 
