@@ -8,7 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { NationalityModule } from './contexts/ressources/nationality/nationality.module';
 import { eventModule } from './core/events/event.module';
-import { NotificationsModule } from './contexts/notification/MailerModule';
+import { NotificationsModule } from './core/mailer/MailerModule';
 
 @Module({
   imports: [
