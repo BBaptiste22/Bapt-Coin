@@ -3,6 +3,8 @@ import { LoginDTO, RegisterDTO } from './types/auth.dto';
 import { AUTH_REPOSITORY, type IAuthRepository } from './auth.repository.interface';
 import { PASSWORD_HASHER, type IPasswordHasherPort } from './ports/password-hasher';
 import { JWT_TOKEN_SERVICE, type JWTTokenPort } from './ports/jwt';
+import { EVENT_BUS, type EventBusPort } from 'src/core/events/event.bus';
+import { userRegisteredEvent } from './events/user-registrered.event';
 
 @Injectable()
 export class AuthService {
@@ -10,6 +12,7 @@ export class AuthService {
         @Inject(AUTH_REPOSITORY) private readonly authRepo: IAuthRepository,
         @Inject(PASSWORD_HASHER) private readonly passwordService: IPasswordHasherPort,
         @Inject(JWT_TOKEN_SERVICE) private readonly tokenService: JWTTokenPort,
+        @Inject(EVENT_BUS) private readonly eventBus: EventBusPort,
     ) {}
 
     async register(registerDto: RegisterDTO) {
@@ -25,6 +28,13 @@ export class AuthService {
             password: passwordHash,
         });
 
+        await this.eventBus.publish(
+            userRegisteredEvent.create({
+                id: credential.id,
+                email: credential.email,
+            })
+        );
+
         return {
             id: credential.id,
             email: credential.email,
@@ -33,7 +43,7 @@ export class AuthService {
 
     async login(loginDto: LoginDTO) {
         const credential = await this.authRepo.findCredentialByEmail(loginDto.email);
-        
+
         if (!credential) {
             throw new UnauthorizedException('Email ou mot de passe incorrect');
         }

@@ -15,5 +15,5 @@ export class UserCredentialsEntity{
 
     @CreateDateColumn({name : 'created_at'})
     createdAt : Date
-
+    
 }
