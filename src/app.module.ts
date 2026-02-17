@@ -9,6 +9,7 @@ import { join } from 'path';
 import { NationalityModule } from './contexts/ressources/nationality/nationality.module';
 import { eventModule } from './core/events/event.module';
 import { NotificationsModule } from './core/mailer/MailerModule';
+import { CollectionModule } from './contexts/collection/collection.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { NotificationsModule } from './core/mailer/MailerModule';
     NationalityModule,
     eventModule,
     NotificationsModule,
+    CollectionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
