@@ -18,10 +18,10 @@ export class UserCredentialsEntity {
         name: 'permissions',
         type: 'bigint',
         unsigned: true,
-        default: DEFAULT_ADMIN_PERMISSIONS.toString(),
+        default: DEFAULT_PERMISSIONS.toString(),
         transformer: {
-            to: (value: bigint | undefined) => (value ?? DEFAULT_ADMIN_PERMISSIONS).toString(),
-            from: (value: string) => BigInt(value ?? DEFAULT_ADMIN_PERMISSIONS),
+            to: (value: bigint | undefined) => (value ?? DEFAULT_PERMISSIONS).toString(),
+            from: (value: string) => BigInt(value ?? DEFAULT_PERMISSIONS),
         },
     })
     permissions: bigint;
