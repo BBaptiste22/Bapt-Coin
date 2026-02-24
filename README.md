@@ -1,6 +1,6 @@
 # 🪙 BAPT-COIN
 
-API REST développée avec **NestJS** permettant la gestion d’une application de collection et d’échange de pièces de monnaie.
+API REST développée avec **NestJS** permettant la gestion d'une application de collection et d'échange de pièces de monnaie.
 
 ---
 
@@ -8,11 +8,11 @@ API REST développée avec **NestJS** permettant la gestion d’une application 
 
 BAPT-COIN permet aux utilisateurs de :
 
-* S’inscrire et s’authentifier (JWT)
-* Recevoir un email lors de l’inscription
+* S'inscrire et s'authentifier (JWT)
+* Recevoir un email lors de l'inscription
 * Gérer leur collection personnelle de pièces
 * Consulter les pièces disponibles
-* Créer des annonces d’échange
+* Créer des annonces d'échange
 * Accepter des annonces
 * Confirmer des transactions
 * Supprimer leurs annonces
@@ -47,7 +47,7 @@ src/
 │
 ├── core/
 │   ├── permissions/           → Guards & permissions personnalisées
-│   ├── mailer/                → Service d’envoi d’emails (Nodemailer)
+│   ├── mailer/                → Service d'envoi d'emails (Nodemailer)
 │   └── events/                → Gestion des événements internes
 │
 └── app.module.ts
@@ -56,22 +56,13 @@ src/
 Architecture modulaire respectant les bonnes pratiques NestJS.
 
 ---
-# .env
-
-```bash
-MAIL_HOST=smtp.gmail.com
-MAIL_PORT=587
-MAIL_USER=ADRESSE_MAIL_ENVOYEUR
-MAIL_PASS=MOT_DE_PASSE_MAIL
-```
----
 
 # 🗄 Base de données
 
 * SGBD : MySQL
 * Nom de la base : `backend_base`
 * ORM : TypeORM
-* Synchronisation activée en développement
+* Synchronisation activée en développement (les tables sont créées automatiquement)
 
 ---
 
@@ -96,6 +87,20 @@ npm install
 CREATE DATABASE backend_base;
 ```
 
+## 4️⃣ Configurer les variables d'environnement
+
+Crée un fichier `.env` à la racine du projet en te basant sur `.env.example` :
+
+
+Contenu du `.env` :
+
+```env
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USER=votre_adresse_mail
+MAIL_PASS=votre_mot_de_passe_mail
+```
+
 
 ## 5️⃣ Lancer le serveur
 
@@ -111,8 +116,9 @@ http://localhost:4001
 
 ## 6️⃣ Tester l'API
 
-Routes pour tester l'API :
+Documentation Swagger interactive :
 
 ```
 http://localhost:4001/api/
 ```
+
