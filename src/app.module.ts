@@ -10,6 +10,7 @@ import { NationalityModule } from './contexts/ressources/nationality/nationality
 import { eventModule } from './core/events/event.module';
 import { NotificationsModule } from './core/mailer/MailerModule';
 import { CollectionModule } from './contexts/collection/collection.module';
+import { AnnouncementModule } from './contexts/announcement/announcement.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { CollectionModule } from './contexts/collection/collection.module';
     eventModule,
     NotificationsModule,
     CollectionModule,
+    AnnouncementModule,
   ],
   controllers: [AppController],
   providers: [AppService],

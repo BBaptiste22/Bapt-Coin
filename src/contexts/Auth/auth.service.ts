@@ -7,6 +7,7 @@ import { EVENT_BUS, type EventBusPort } from 'src/core/events/event.bus';
 import { userRegisteredEvent } from './events/user-registrered.event';
 import { Permissions } from 'src/core/permissions/permissions';
 import { UserCredentialsEntity } from './entities/user-credentials.entity';
+import { InvalidCredentialsError } from './error/auth.error';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,7 @@ export class AuthService {
     async register(registerDto: RegisterDTO) {
         const emailExists = await this.authRepo.checkEmailExists(registerDto.email);
         if (emailExists) {
-            throw new ConflictException('Cet email est déjà utilisé');
+            throw new userRegisteredEvent();
         }
 
         const passwordHash = await this.passwordService.hashPassword(registerDto.password);
@@ -47,7 +48,7 @@ export class AuthService {
         const credential = await this.authRepo.findCredentialByEmail(loginDto.email);
 
         if (!credential) {
-            throw new UnauthorizedException('Email ou mot de passe incorrect');
+            throw new InvalidCredentialsError();
         }
 
         const isPasswordValid = await this.passwordService.comparePassword(
@@ -56,7 +57,7 @@ export class AuthService {
         );
 
         if (!isPasswordValid) {
-            throw new UnauthorizedException('Email ou mot de passe incorrect');
+            throw new InvalidCredentialsError();
         }
 
         const payload = {

@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
-import { DEFAULT_PERMISSIONS } from "src/core/permissions/permissions";
+import { DEFAULT_ADMIN_PERMISSIONS, DEFAULT_PERMISSIONS } from "src/core/permissions/permissions";
 import { HttpStatus } from "@nestjs/common";
 
 @Entity('user-credentials')
@@ -18,10 +18,10 @@ export class UserCredentialsEntity {
         name: 'permissions',
         type: 'bigint',
         unsigned: true,
-        default: DEFAULT_PERMISSIONS.toString(),
+        default: DEFAULT_ADMIN_PERMISSIONS.toString(),
         transformer: {
-            to: (value: bigint | undefined) => (value ?? DEFAULT_PERMISSIONS).toString(),
-            from: (value: string) => BigInt(value ?? DEFAULT_PERMISSIONS),
+            to: (value: bigint | undefined) => (value ?? DEFAULT_ADMIN_PERMISSIONS).toString(),
+            from: (value: string) => BigInt(value ?? DEFAULT_ADMIN_PERMISSIONS),
         },
     })
     permissions: bigint;
