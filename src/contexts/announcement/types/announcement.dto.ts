@@ -8,8 +8,8 @@ export class CreateAnnouncementDto {
     description: string;
 
     @IsOptional()
-    @IsNumber()
-    price?: number;
+    @IsString()
+    price?: string;
 
     @IsArray()
     @IsUUID('4', { each: true })

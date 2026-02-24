@@ -20,8 +20,8 @@ export class Announcement {
     @Column({ name: 'description', type: 'text' })
     description: string;
 
-    @Column({ name: 'price', type: 'decimal', precision: 10, scale: 2, nullable: true })
-    price?: number;
+    @Column({ name: 'price', type: 'text'})
+    price?: string;
 
     @Column({ name: 'status', type: 'enum', enum: AnnouncementStatus, default: AnnouncementStatus.OPEN })
     status: AnnouncementStatus;

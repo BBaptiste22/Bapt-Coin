@@ -17,7 +17,7 @@ export class AnnouncementService {
         private readonly announcementCoinRepo: Repository<AnnouncementCoin>,
     ) {}
 
-    async createAnnouncement(title: string, description: string, offeredCoins: string[], wantedCoins: string[], price: number | undefined, creatorId: string): Promise<Announcement> {
+    async createAnnouncement(title: string, description: string, offeredCoins: string[], wantedCoins: string[], price: string | undefined, creatorId: string): Promise<Announcement> {
         const announcement = await this.announcementRepo.create({
             title,
             description,
