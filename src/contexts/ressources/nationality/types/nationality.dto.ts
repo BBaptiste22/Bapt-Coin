@@ -1,36 +1,54 @@
 import { IsOptional, IsString } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
 export class RscNationality {
-    @IsString()
-    name: string;
 
-    @IsString()
-    country_code: string;
+  @ApiProperty({
+    example: "France",
+  })
+  @IsString()
+  name: string;
 
-    @IsString()
-    flag: string;
+  @ApiProperty({
+    example: "FR",
+  })
+  @IsString()
+  country_code: string;
+
+  @ApiProperty({
+    example: "🇫🇷",
+  })
+  @IsString()
+  flag: string;
 }
 
 export class UpdateNationalityDto {
-    @IsOptional()
-    @IsString()
-    name?: string;
 
-    @IsOptional()
-    @IsString()
-    country_code?: string;
+  @ApiPropertyOptional({ example: "Allemagne" })
+  @IsOptional()
+  @IsString()
+  name?: string;
 
-    @IsOptional()
-    @IsString()
-    flag?: string;
+  @ApiPropertyOptional({ example: "DE" })
+  @IsOptional()
+  @IsString()
+  country_code?: string;
+
+  @ApiPropertyOptional({ example: "🇩🇪" })
+  @IsOptional()
+  @IsString()
+  flag?: string;
 }
 
 export class NationalityFilterDto {
-    @IsOptional()
-    @IsString()
-    name?: string;
 
-    @IsOptional()
-    @IsString()
-    country_code?: string;
+  @ApiPropertyOptional({ example: "France" })
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @ApiPropertyOptional({ example: "FR" })
+  @IsOptional()
+  @IsString()
+  country_code?: string;
 }

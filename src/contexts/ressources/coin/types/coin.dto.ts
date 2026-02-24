@@ -1,66 +1,104 @@
-import { IsDateString, IsNumber, IsOptional, IsString, Min } from "class-validator";
-import { Type } from "class-transformer";
+import {
+  IsDateString,
+  IsOptional,
+  IsString,
+} from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
 export class RscCoin {
-    @IsString()
-    name: string;
 
-    @IsString()
-    description: string;
+  @ApiProperty({
+    example: "2 euros JO 2024",
+  })
+  @IsString()
+  name: string;
 
-    @IsNumber()
-    quantity: string;
+  @ApiProperty({
+    example: "Pièce de 2 euros pour l'ouverture des Jeux Olympiques 2024 à Paris",
+  })
+  @IsString()
+  description: string;
 
-    @IsString()
-    value: string;
+  @ApiProperty({
+    example: "22000000",
+  })
+  @IsString()
+  quantity: string;
 
-    @IsDateString()
-    release: Date;
+  @ApiProperty({
+    example: "5",
+  })
+  @IsString()
+  value: string;
 
-    @IsString()
-    nationality: string;
+  @ApiProperty({
+    example: "2024-01-01",
+  })
+  @IsDateString()
+  release: Date;
+
+  @ApiProperty({
+    example: "France",
+  })
+  @IsString()
+  nationality: string;
 }
 
 export class UpdateCoinDto {
-    @IsOptional()
-    @IsString()
-    name?: string;
 
-    @IsOptional()
-    @IsString()
-    description?: string;
+  @ApiPropertyOptional({ example: "2 euros Allemagne 2015" })
+  @IsOptional()
+  @IsString()
+  name?: string;
 
-    @IsOptional()
-    @IsString()
-    quantity?: string;
+  @ApiPropertyOptional({ example: "Pièce commémorative allemande 2€" })
+  @IsOptional()
+  @IsString()
+  description?: string;
 
-    @IsOptional()
-    @IsString()
-    value?: string;
+  @ApiPropertyOptional({ example: "30000000" })
+  @IsOptional()
+  @IsString()
+  quantity?: string;
 
-    @IsOptional()
-    @IsString()
-    nationality?: string;
+  @ApiPropertyOptional({ example: "3" })
+  @IsOptional()
+  @IsString()
+  value?: string;
+
+  @ApiPropertyOptional({ example: "Allemagne" })
+  @IsOptional()
+  @IsString()
+  nationality?: string;
 }
 
 export class CoinFilterDto {
-    @IsOptional()
-    @IsString()
-    name?: string;
 
-    @IsOptional()
-    @IsString()
-    nationality?: string;
+  @ApiPropertyOptional({
+    example: "2 euros JO 2024",
+  })
+  @IsOptional()
+  @IsString()
+  name?: string;
 
-    @IsOptional()
-    @Type(() => Number)
-    @IsNumber()
-    @Min(1)
-    page?: number = 1;
+  @ApiPropertyOptional({
+    example: "France",
+  })
+  @IsOptional()
+  @IsString()
+  nationality?: string;
 
-    @IsOptional()
-    @Type(() => Number)
-    @IsNumber()
-    @Min(1)
-    limit?: number = 10;
+  @ApiPropertyOptional({
+    example: "1",
+  })
+  @IsOptional()
+  @IsString()
+  page?: string = "1";
+
+  @ApiPropertyOptional({
+    example: "10"
+  })
+  @IsOptional()
+  @IsString()
+  limit?: string = "10";
 }

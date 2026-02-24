@@ -1,11 +1,20 @@
 import { IsString, IsUUID } from "class-validator";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateCollectionDto {
-    @IsString()
-    name: string;
+
+  @ApiProperty({
+    example: "Ma collection de coins",
+  })
+  @IsString()
+  name: string;
 }
 
 export class AddCoinDto {
-    @IsUUID()
-    coinId: string;
+
+  @ApiProperty({
+    example: "550e8400-e29b-41d4-a716-446655440000",
+  })
+  @IsUUID()
+  coinId: string;
 }
