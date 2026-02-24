@@ -28,6 +28,7 @@ BAPT-COIN permet aux utilisateurs de :
 * JWT (Access + Refresh Token)
 * Nodemailer
 * Class-validator
+* NestSwagger (/api)
 
 ---
 
@@ -54,6 +55,15 @@ src/
 
 Architecture modulaire respectant les bonnes pratiques NestJS.
 
+---
+# .env
+
+```bash
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USER=ADRESSE_MAIL_ENVOYEUR
+MAIL_PASS=MOT_DE_PASSE_MAIL
+```
 ---
 
 # 🗄 Base de données
