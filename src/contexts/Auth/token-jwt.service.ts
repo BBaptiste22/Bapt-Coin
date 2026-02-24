@@ -4,7 +4,7 @@ import { JWTTokenPort } from "./ports/jwt";
 
 @Injectable()
 export class TokenJwtService implements JWTTokenPort {
-    private readonly secret = '512821781512217718178122177182'; // À mettre dans les variables d'environnement
+    private readonly secret = '512821781512217718178122177182'; 
 
     async generateToken(payload: object, expiresIn?: string | number): Promise<string> {
         return new Promise((resolve, reject) => {

@@ -12,7 +12,7 @@ export interface IAnnouncementRepository {
     update(id: string, data: Partial<Announcement>): Promise<Announcement>;
     delete(id: string): Promise<void>;
     
-    // Transactions
+    
     createTransaction(announcementId: string, acceptorId: string): Promise<TradeTransaction>;
     findTransactionById(id: string): Promise<TradeTransaction | null>;
     findTransactionByAnnouncementId(announcementId: string): Promise<TradeTransaction | null>;
